@@ -1,5 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project( displayWebcam )
-find_package( OpenCV REQUIRED )
-add_executable( displayWebcam src/displayWebcam.cpp )
-target_link_libraries( displayWebcam ${OpenCV_LIBS} )

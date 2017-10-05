@@ -5,24 +5,18 @@ Work in progress ...
 
 # Install Dependencies
 
-Install [OpenCV](http://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/).
+1. Install [OpenCV](http://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/).
 
-Python requirements, execute:
+2. To install Python requirements, open a new terminal and execute:
 
 	$ pip install -r requirements.txt
 
-# Build
-
-Open a new terminal and execute:
-
-	$ cd path/to/personal-webcam-server
-	$ mkdir build && cd build
-	$ cmake ..
-	$ make
-
 # Usage
 
-In progress...
+Open a new terminal, and execute:
+
+	$ cd path/to/scripts
+	$ ./app.py
 
 # Credits
 
