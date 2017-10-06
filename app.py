@@ -27,10 +27,8 @@
 # https://github.com/miguelgrinberg/flask-video-streaming
 # ----------------------------------------------------------------------------
 
-from importlib import import_module
-import os
-from flask import Flask, render_template, Response
 import cv2
+from flask import Flask, render_template, Response
 
 app = Flask(__name__)
 
@@ -43,18 +41,19 @@ def index():
 
 def gen(camera):
     """Video streaming generator function."""
-    while True:
-        s, frame = camera.read()
-        print s
-        if s:
+    while camera.isOpened():
+        ret, frame = camera.read()
+        if ret:
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        else:
+            print 'Unsuccessfull to read frame from webcam.'
 
 
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(cv2.VideoCapture(-1)),
+    return Response(gen(cv2.VideoCapture(0)),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
