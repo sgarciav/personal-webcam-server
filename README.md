@@ -15,9 +15,11 @@ Work in progress ...
 
 # Usage
 
-Open a new terminal, and execute:
+1. Open a new terminal, and execute:
 
-	$ ./app.py
+		$ ./app.py
+
+2. Open a browser and navigate to `0.0.0.0:5000`.
 
 # Troubleshooting
 

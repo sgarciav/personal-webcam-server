@@ -42,12 +42,21 @@ def index():
 def gen(camera):
     """Video streaming generator function."""
     while camera.isOpened():
-        ret, frame = camera.read()
-        if ret:
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+        # read next frame form webcam
+        success_read, frame = camera.read()
+
+        # encode frame to jpeg
+        if success_read:
+            success_encode, jpeg = cv2.imencode('.jpg', frame)
         else:
             print 'Unsuccessfull to read frame from webcam.'
+
+        if success_encode:
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
+        else:
+            print 'Unsuccessfull econding frame.'
 
 
 @app.route('/video_feed')
