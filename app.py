@@ -48,7 +48,8 @@ def gen(camera):
 
         # encode frame to jpeg
         if success_read:
-            success_encode, jpeg = cv2.imencode('.jpg', frame)
+            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 0.1] # 90 is good
+            success_encode, jpeg = cv2.imencode('.jpg', frame, encode_param)
         else:
             print 'Unsuccessfull to read frame from webcam.'
 
