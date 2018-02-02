@@ -46,7 +46,7 @@ sockets = Sockets(app)
 
 @app.route('/echo_test', methods=['GET'])
 def echo_test():
-    return render_template('udp_index.html')
+    return render_template('WebSockets_index.html')
 
 @sockets.route('/echo')
 def echo_socket(ws):
