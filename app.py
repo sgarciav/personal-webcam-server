@@ -28,10 +28,43 @@
 # ----------------------------------------------------------------------------
 
 import cv2
+import argparse
 from flask import Flask, render_template, Response
 
 app = Flask(__name__)
 
+
+# user-defined functions
+# ---------------------------------------
+# ---------------------------------------
+
+
+# -----------------------
+def parse_arguments():
+    ''' parse through command line arguments '''
+    global args_
+
+    parser = argparse.ArgumentParser(description='Run personal webcam server.')
+
+    # # required values
+    # parser.add_argument(
+    #     "quality",
+    #     type=int,
+    #     help="Quality of compression."
+    # )
+
+    # optional values
+    parser.add_argument(
+        "--quality",
+        type=float, default=90.0,
+        help="Quality of image compression."
+    )
+
+    args_ = parser.parse_args()
+
+
+# main functions
+# =======================================
 
 @app.route('/')
 def index():
@@ -48,7 +81,7 @@ def gen(camera):
 
         # encode frame to jpeg
         if success_read:
-            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 0.1] # 90 is good
+            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), args_.quality] # 90 is good
             success_encode, jpeg = cv2.imencode('.jpg', frame, encode_param)
         else:
             print 'Unsuccessfull to read frame from webcam.'
@@ -67,5 +100,8 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+# ---------------
+
 if __name__ == '__main__':
+    parse_arguments()
     app.run(host='0.0.0.0', threaded=True)
