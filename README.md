@@ -3,33 +3,30 @@
 Welcome! Herein lies the code you need to stream your webcam over the internet.
 Work in progress ...
 
-# Install Dependencies
+# First Time Instructions
 
-1. Install Python requirements:
+## Install Dependencies
 
+1. Setup directories and create a python virtual environment:
+
+        $ mkdir -p ~/python_ws/webcam-server
+        $ cd ~/python_ws/webcam-server
+        $ python3 -m venv env
+        $ source ./env/bin/activate
+
+2. Install Python requirements:
+
+        $ cd /path/to/personal-webcam-server
 		$ pip install -r requirements.txt
-
-2. Install
-   [OpenCV3](https://github.com/kratzert/Ubuntu_from_scratch/blob/master/Ubuntu_16_04LTS.md#installing-opencv3)
-   from source.
 
 # Usage
 
 1. Open a new terminal, and execute:
 
+        $ cd /path/to/personal-webcam-server
 		$ ./app.py
 
-2. Open a browser and navigate to `0.0.0.0:5000`.
-
-# Troubleshooting
-
-## Problem: camera won't capture video frame
-
-Taken from [GitHub](https://github.com/opencv/opencv/issues/8471):
-
-After compiling OpenCV from source, replace the cv2.so library file:
-
-	$ sudo cp opencv-3.2.0/build/lib/cv2.so /usr/local/lib/python2.7/dist-packages/cv2/
+2. Open a browser and navigate to `localhost:5000`.
 
 # Credits
 
@@ -39,7 +36,3 @@ made. Thanks!
 Website links:
 * [Miguel Grinberg Blog](http://blog.miguelgrinberg.com/post/video-streaming-with-flask)
 * [GitHub Source Code](https://github.com/miguelgrinberg/flask-video-streaming)
-
-# Authors
-
-Sergio Garcia-Vergara <sergiodotgarcia@gmail.com>

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # ----------------------------------------------------------------------------
 # The MIT License (MIT)
@@ -34,38 +34,6 @@ from flask import Flask, render_template, Response
 app = Flask(__name__)
 
 
-# user-defined functions
-# ---------------------------------------
-# ---------------------------------------
-
-
-# -----------------------
-def parse_arguments():
-    ''' parse through command line arguments '''
-    global args_
-
-    parser = argparse.ArgumentParser(description='Run personal webcam server.')
-
-    # # required values
-    # parser.add_argument(
-    #     "quality",
-    #     type=int,
-    #     help="Quality of compression."
-    # )
-
-    # optional values
-    parser.add_argument(
-        "--quality",
-        type=float, default=90.0,
-        help="Quality of image compression."
-    )
-
-    args_ = parser.parse_args()
-
-
-# main functions
-# =======================================
-
 @app.route('/')
 def index():
     """Video streaming home page."""
@@ -81,27 +49,31 @@ def gen(camera):
 
         # encode frame to jpeg
         if success_read:
-            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), args_.quality] # 90 is good
-            success_encode, jpeg = cv2.imencode('.jpg', frame, encode_param)
+            success_encode, buff = cv2.imencode('.jpg', frame)
         else:
-            print 'Unsuccessfull to read frame from webcam.'
+            print('Unsuccessfull to read frame from webcam.')
 
         if success_encode:
+            frame = buff.tobytes()
             yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n')
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
         else:
-            print 'Unsuccessfull econding frame.'
+            print('Unsuccessfull econding frame.')
 
 
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(cv2.VideoCapture(0)),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    camera = cv2.VideoCapture(0)
+    return Response(gen(camera), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 # ---------------
 
 if __name__ == '__main__':
-    parse_arguments()
-    app.run(host='0.0.0.0', threaded=True)
+    parser = argparse.ArgumentParser(description='Run personal webcam server.')
+    # parser.add_argument('quality', type=int, help='Quality of compression.')
+
+    args = parser.parse_args()
+
+    app.run(host='127.0.0.1', threaded=True)
