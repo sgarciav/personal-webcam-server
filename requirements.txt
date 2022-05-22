@@ -1,6 +1,6 @@
 opencv-python
-Flask==0.12.2
+flask>=1.0.0
 Flask-Sockets
 MarkupSafe
-Jinja2==2.9.6
+jinja2>=2.11.3
 itsdangerous==0.24
