@@ -21,12 +21,24 @@ Work in progress ...
 
 # Usage
 
+## Local Development
+
 1. Open a new terminal, and execute:
 
         $ cd /path/to/personal-webcam-server
-		$ ./app.py
+        $ ./app.py
 
 2. Open a browser and navigate to `localhost:5000`.
+
+## Remote Access
+
+1. Open a new terminal, and execute:
+
+        $ cd /path/to/personal-webcam-server
+        $ gunicorn --threads 4 --workers 1 --bind 192.168.1.70:5000 app:app
+
+2. Open a browser on any device and navigate to `garcia.webhop.me:5000`. The
+   explanation for setting up the remote access is not covered in this README.
 
 # Credits
 

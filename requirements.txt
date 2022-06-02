@@ -4,3 +4,4 @@ Flask-Sockets
 MarkupSafe
 jinja2>=2.11.3
 itsdangerous==0.24
+gunicorn

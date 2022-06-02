@@ -72,8 +72,10 @@ def video_feed():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run personal webcam server.')
-    # parser.add_argument('quality', type=int, help='Quality of compression.')
+    parser.add_argument('-i', '--ip_addr', type=str, help='IP address of the host.', default='192.168.1.70')
+    parser.add_argument('-p', '--port', type=int, help='Port of the host.', default=5000)
 
     args = parser.parse_args()
 
-    app.run(host='0.0.0.0', threaded=True)
+    # Run main application
+    app.run(host=args.ip_addr, port=args.port, threaded=True)
